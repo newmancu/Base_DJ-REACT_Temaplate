@@ -124,6 +124,6 @@ def user_register(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def taskbox_list(request):
-  queryset = TodoTaskBox.objects.filter(author=request.user.pk)
+  queryset = TodoTaskBox.objects.filter(author=request.user.pk).exclude(finished_date__isnull=False)
   s = TaskBoxSerializer(queryset, many=True)
   return Response(s.data, status=status.HTTP_200_OK)
